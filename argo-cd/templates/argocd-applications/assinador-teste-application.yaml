@@ -1,0 +1,34 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: assinador-teste
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: govbr
+    server: https://192.168.19.200:6443
+  source:
+    path: assina
+    repoURL: https://gitlab.iti.br/ufsc/assinador.git
+    targetRevision: main
+    helm:
+      valueFiles:
+        - teste/values-govbr.yaml
+        - teste/values-teste.yaml
+        - teste/avancada_oauth_server.yaml
+      parameters:
+        - name: ambiente
+          value: teste
+  sources: []
+  project: assinador
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - PruneLast=true

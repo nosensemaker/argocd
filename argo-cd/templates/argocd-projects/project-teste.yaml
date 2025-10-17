@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: teste
+  namespace: argocd
+  annotations:
+    description: "Projeto de teste para deploys do GitLab"
+spec:
+  permitOnlyProjectScopedClusters: true
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - name: teste-cluster
+    namespace: govbr
+    server: https://192.168.19.200:6443
+  - name: teste-cluster
+    namespace: '*'
+    server: https://192.168.19.200:6443
+  sourceRepos:
+  - https://gitlab.iti.br/ufsc/assinador.git

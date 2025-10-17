@@ -1,0 +1,18 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ityhy
+  namespace: argocd
+  annotations:
+    description: "Project inicial do Ityhy para ambiente de Teste/Homol/Prod"
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - name: teste-cluster
+    namespace: govbr
+    server: https://192.168.19.200:6443
+  sourceRepos:
+  - https://gitlab.iti.br/cgicp/assinador/ityhy
